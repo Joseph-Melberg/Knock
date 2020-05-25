@@ -1,4 +1,5 @@
-#open file
+#!/usr/bin/python
+import mysql.connector
 import re
 
 import datetime 
@@ -11,7 +12,14 @@ class entry(object):
 reg = "(\S* \d* \S*) (\S*) .*Failed password for (?:(?:invalid user )?((?:\S*)|(?:root))) from ([\d\.]*) port (\d*) (\S*)"
 
 
-   
+mydb = mysql.connector.connect(host="localhost",user="user",passwd="pass",database="Home_Data")
+mycursor = mydb.cursor()
+def record(value):
+    command = "INSERT INTO Home_Data.failed_access (date,target_ip,username,source_ip,port,method)  (%s,%s,%s,%s,%s,%s)"
+    mycursor.execute(command,value)
+    mydb.commit()
+  
+    print "done"
 # Function to covert string to datetime 
 def convert(date_time): 
     format = '%b %d  %I:%M:%S' # The format 
@@ -28,8 +36,9 @@ def find():
 		print res
 	if(len(res)!=0):
 		print(res[0])
-		print(convert(res[0][0]))
+		result = res[0]
+		result[0] = convert(result[0])
+
 	raw_input()
 while True:
-
 	find()
