@@ -27,16 +27,12 @@ def find():
 	line = f.readline();
 	if line is None:
 		exit()
-#"(\S* \d* \S*) (\\S*)"
 	res = re.findall(reg,line)
 	for i in res:
 		print res
 	if(len(res)!=0):
 		print line
-		#print(res[0])
 		result = list(res[0])
-
-		#print(str(result[0]))
 		result[0] = convert(str(result[0]))
 		record(result)
 while True:
