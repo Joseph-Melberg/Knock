@@ -29,19 +29,22 @@ def convert(date_time):
     now = datetime.datetime.now()
     datetime_str = datetime.datetime.strptime(date_time, '%b %d %H:%M:%S').replace(year=now.year)
     return datetime_str 
-   
+done = False
 def find():
 	line = f.readline();
-	if line is None:
+	if line is '':
+		done = True
 		exit()
+		return
 	res = re.findall(reg,line)
 	for i in res:
-		print res
+		print(i)
 	if(len(res)!=0):
 	#	print line
 		result = list(res[0])
 		result[0] = convert(str(result[0]))
 		if(result[0] > latest):
 			record(result)
-while True:
+while not done:
 	find()
+print("I am finished")
