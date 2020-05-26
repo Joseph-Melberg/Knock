@@ -10,6 +10,13 @@ reg = "(\S* \d* \S*) (\S*) .*Failed password for (?:(?:invalid user )?((?:\S*)|(
 
 mydb = mysql.connector.connect(host="10.0.0.3",user="user",passwd="pass",database="Home_Data")
 mycursor = mydb.cursor()
+
+mycursor.execute("SELECT date FROM Home_Data.failed_access ORDER BY date desc L$
+latest_str = str(mycursor.fetchall()[0][0])
+print(latest_str)
+latest = datetime.datetime.strptime(latest_str,'%Y-%m-%d %H:%M:%S')
+
+
 def record(value):
     command = "INSERT INTO Home_Data.failed_access (date,target_ip,username,source_ip,port,method) VALUES (%s,%s,%s,%s,%s,%s)"
     mycursor.execute(command,value)
@@ -31,9 +38,10 @@ def find():
 	for i in res:
 		print res
 	if(len(res)!=0):
-		print line
+	#	print line
 		result = list(res[0])
 		result[0] = convert(str(result[0]))
-		record(result)
+		if(result[0] > latest):
+			record(result)
 while True:
 	find()
