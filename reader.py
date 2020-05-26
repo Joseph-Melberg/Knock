@@ -11,7 +11,7 @@ reg = "(\S* \d* \S*) (\S*) .*Failed password for (?:(?:invalid user )?((?:\S*)|(
 mydb = mysql.connector.connect(host="10.0.0.3",user="user",passwd="pass",database="Home_Data")
 mycursor = mydb.cursor()
 
-mycursor.execute("SELECT date FROM Home_Data.failed_access ORDER BY date desc L$
+mycursor.execute("SELECT date FROM Home_Data.failed_access ORDER BY date desc LIMIT 1")
 latest_str = str(mycursor.fetchall()[0][0])
 print(latest_str)
 latest = datetime.datetime.strptime(latest_str,'%Y-%m-%d %H:%M:%S')
