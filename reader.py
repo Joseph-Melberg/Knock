@@ -6,7 +6,7 @@ import datetime
 
 f = open("/var/log/auth.log", "r")
 
-reg = "(\S* \d* \S*) (\S*) .*Failed password for (?:(?:invalid user )?((?:\S*)|(?:root))) from ([\d\.]*) port (\d*) (\S*)"
+reg = "(\S* {1,2}\d* \S*) (\S*) .*Failed password for (?:(?:invalid user )?((?:\S*)|(?:root))) from ([\d\.]*) port (\d*) (\S*)"
 
 mydb = mysql.connector.connect(host="10.0.0.3",user="user",passwd="pass",database="Home_Data")
 mycursor = mydb.cursor()
